@@ -12,6 +12,4 @@
         <module>cglib-sample</module>
         <module>activemq-sample</module>
     </modules>
-
-
 </project>
