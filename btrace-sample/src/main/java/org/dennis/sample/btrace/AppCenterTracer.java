@@ -11,6 +11,7 @@ import com.sun.btrace.annotations.TLS;
 
 import java.util.List;
 
+import static com.sun.btrace.BTraceUtils.Threads.jstack;
 import static com.sun.btrace.BTraceUtils.compare;
 import static com.sun.btrace.BTraceUtils.field;
 import static com.sun.btrace.BTraceUtils.get;
@@ -56,5 +57,20 @@ public class AppCenterTracer {
             println(strcat("Heap usage: ", str(heapUsage())));
             println(strcat("Thread count: ", str(threadCount())));
         }
+    }
+
+    @OnMethod(
+            clazz = "com.tcl.mie.appcenter.osapp.api.OsAppService",
+            method = "findAppsByIds",
+            location = @Location(Kind.RETURN)
+    )
+    public static void traceExecute(List<AnyType> var1, AnyType var2, AnyType var3, @Return List<AnyType> result) {
+        println("====================================================================================================");
+        println(strcat("Parameter var1: ", str(var1)));
+        println(strcat("Parameter var2: ", str(var2)));
+        println(strcat("Parameter var3: ", str(var3)));
+        println(strcat("Result size: ", str(size(result))));
+        println(strcat("Result: ", str(result)));
+        jstack();
     }
 }
